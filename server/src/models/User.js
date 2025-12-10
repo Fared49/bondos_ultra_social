@@ -1,4 +1,8 @@
 import mongoose from 'mongoose';
+<<<<<<< HEAD
+=======
+import bcrypt from 'bcryptjs';
+>>>>>>> 53a9161 (🚀 Initial project setup: Full-stack app with React, Node.js, Express, MongoDB, JWT Auth, Docker)
 
 const userSchema = new mongoose.Schema(
   {
@@ -15,6 +19,7 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
       lowercase: true,
+<<<<<<< HEAD
     },
     password: { type: String, required: true, select: false },
     firstName: String,
@@ -30,12 +35,97 @@ const userSchema = new mongoose.Schema(
     refreshToken: { type: String, select: false },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
+=======
+      match: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+    },
+    password: {
+      type: String,
+      required: true,
+      minlength: 6,
+      select: false,
+    },
+    firstName: {
+      type: String,
+      trim: true,
+    },
+    lastName: {
+      type: String,
+      trim: true,
+    },
+    bio: {
+      type: String,
+      maxlength: 500,
+    },
+    avatar: {
+      type: String,
+      default: null,
+    },
+    theme: {
+      mode: {
+        type: String,
+        enum: ['light', 'dark'],
+        default: 'light',
+      },
+      primaryColor: {
+        type: String,
+        default: '#3B82F6',
+      },
+      accentColor: {
+        type: String,
+        default: '#10B981',
+      },
+    },
+    followers: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: 'User',
+      default: [],
+    },
+    following: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: 'User',
+      default: [],
+    },
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
+    refreshToken: {
+      type: String,
+      select: false,
+    },
+>>>>>>> 53a9161 (🚀 Initial project setup: Full-stack app with React, Node.js, Express, MongoDB, JWT Auth, Docker)
   },
   { timestamps: true }
 );
 
+<<<<<<< HEAD
 userSchema.methods.toJSON = function() {
   const { password, refreshToken, ...user } = this.toObject();
+=======
+// Hash password before saving
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) return next();
+
+  try {
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
+
+// Method to compare passwords
+userSchema.methods.comparePassword = async function (inputPassword) {
+  return bcrypt.compare(inputPassword, this.password);
+};
+
+// Method to get user public data
+userSchema.methods.toJSON = function () {
+  const user = this.toObject();
+  delete user.password;
+  delete user.refreshToken;
+>>>>>>> 53a9161 (🚀 Initial project setup: Full-stack app with React, Node.js, Express, MongoDB, JWT Auth, Docker)
   return user;
 };
 

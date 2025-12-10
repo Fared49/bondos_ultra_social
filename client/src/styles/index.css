@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  @apply box-border;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply font-sans antialiased;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  @apply w-2 h-2;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100 dark:bg-slate-800;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-400 dark:bg-slate-600 rounded hover:bg-gray-500 dark:hover:bg-slate-500;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    @apply opacity-0;
+  }
+  to {
+    @apply opacity-100;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    @apply opacity-0 translate-y-4;
+  }
+  to {
+    @apply opacity-100 translate-y-0;
+  }
+}
+
+.animate-fadeIn {
+  @apply animation-fadeIn duration-300;
+}
+
+.animate-slideUp {
+  @apply animation-slideUp duration-300;
+}

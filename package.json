@@ -1,0 +1,29 @@
+{
+  "name": "bondos-ultra-social",
+  "version": "1.0.0",
+  "description": "A modern, production-grade full-stack social media application",
+  "private": true,
+  "scripts": {
+    "install": "chmod +x scripts/*.sh && bash scripts/install.sh",
+    "dev": "bash scripts/dev.sh",
+    "build": "bash scripts/build.sh",
+    "start": "bash scripts/start.sh",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker-compose logs -f"
+  },
+  "keywords": [
+    "social-media",
+    "react",
+    "nodejs",
+    "express",
+    "mongodb",
+    "docker"
+  ],
+  "author": "Bondos Ultra Social",
+  "license": "MIT",
+  "workspaces": [
+    "server",
+    "client"
+  ]
+}

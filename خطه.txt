@@ -1,0 +1,189 @@
+bondos_ultra_social/
+├── README.md                          # دليل شامل للتشغيل
+├── docker-compose.yml                 # تكوين كامل للحاويات
+├── .env.example                       # متغيرات البيئة
+├── setup.sh                           # سكريبت التثبيت الآلي
+│
+├── server/
+│   ├── Dockerfile                     # بناء خادم FastAPI
+│   ├── requirements.txt               # Python dependencies
+│   ├── pyproject.toml                 # Python project config
+│   ├── alembic.ini                    # تكوين الترحيلات
+│   ├── run.py                         # نقطة التشغيل
+│   │
+│   ├── app/
+│   │   ├── __init__.py
+│   │   ├── main.py                    # FastAPI app
+│   │   ├── config.py                  # إعدادات التطبيق
+│   │   ├── db.py                      # اتصال قاعدة البيانات
+│   │   ├── redis_client.py            # اتصال Redis
+│   │   ├── middleware.py              # Middleware
+│   │   │
+│   │   ├── models/                    # SQLAlchemy Models كاملة
+│   │   │   ├── __init__.py
+│   │   │   ├── user.py                # نموذج المستخدم
+│   │   │   ├── profile.py             # ملف المستخدم
+│   │   │   ├── friendship.py          # الصداقات
+│   │   │   ├── post.py                # المنشورات
+│   │   │   ├── comment.py             # التعليقات
+│   │   │   ├── like.py                # الإعجابات
+│   │   │   ├── message.py             # الرسائل
+│   │   │   ├── notification.py        # الإشعارات
+│   │   │   ├── room.py                # الغرف
+│   │   │   ├── game.py                # الألعاب
+│   │   │   ├── key.py                 # مفاتيح التشفير
+│   │   │   └── audit.py               # السجلات
+│   │   │
+│   │   ├── schemas/                   # Pydantic Schemas
+│   │   │   ├── __init__.py
+│   │   │   ├── user.py
+│   │   │   ├── post.py
+│   │   │   ├── message.py
+│   │   │   └── notification.py
+│   │   │
+│   │   ├── api/                       # FastAPI Routers كاملة
+│   │   │   ├── __init__.py
+│   │   │   ├── auth.py                # المصادقة
+│   │   │   ├── users.py               # المستخدمين
+│   │   │   ├── friends.py             # الأصدقاء
+│   │   │   ├── posts.py               # المنشورات
+│   │   │   ├── feed.py                # التغذية
+│   │   │   ├── messages.py            # الرسائل
+│   │   │   ├── notifications.py       # الإشعارات
+│   │   │   ├── rooms.py               # الغرف
+│   │   │   ├── games.py               # الألعاب
+│   │   │   └── admin.py               # لوحة الإدارة
+│   │   │
+│   │   ├── websocket/                 # WebSocket Handlers
+│   │   │   ├── __init__.py
+│   │   │   ├── manager.py             # إدارة الاتصالات
+│   │   │   ├── chat.py                # الدردشة
+│   │   │   ├── notifications.py       # إشعارات مباشرة
+│   │   │   └── games.py               # ألعاب مباشرة
+│   │   │
+│   │   ├── services/                  # خدمات الأعمال
+│   │   │   ├── __init__.py
+│   │   │   ├── feed_service.py        # خدمة التغذية
+│   │   │   ├── friend_service.py      # خدمة الصداقات
+│   │   │   ├── media_service.py       # خدمة الوسائط
+│   │   │   ├── crypto_service.py      # خدمة التشفير
+│   │   │   └── moderation.py          # خدمة المراقبة
+│   │   │
+│   │   ├── workers/                   # العاملين الخلفيين
+│   │   │   ├── __init__.py
+│   │   │   ├── email_worker.py        # إرسال البريد
+│   │   │   ├── media_worker.py        # معالجة الوسائط
+│   │   │   └── notification_worker.py # إشعارات Push
+│   │   │
+│   │   └── migrations/                # ترحيلات قاعدة البيانات
+│   │       ├── versions/
+│   │       │   └── 001_initial_migration.py
+│   │       └── env.py
+│
+├── client/
+│   ├── package.json                   # إعدادات React
+│   ├── vite.config.js                 # Vite config
+│   ├── tailwind.config.js             # Tailwind CSS
+│   ├── index.html
+│   │
+│   ├── public/
+│   │   ├── favicon.ico
+│   │   └── robots.txt
+│   │
+│   └── src/
+│       ├── main.jsx                   # نقطة الدخول
+│       ├── App.jsx                    # التطبيق الرئيسي
+│       ├── App.css                    # الأنماط
+│       │
+│       ├── lib/
+│       │   ├── api.js                 # مكتبة API
+│       │   ├── websocket.js           # مكتبة WebSocket
+│       │   ├── crypto.js              # مكتبة التشفير
+│       │   └── utils.js               # أدوات مساعدة
+│       │
+│       ├── store/
+│       │   ├── index.js               # إدارة الحالة
+│       │   ├── authSlice.js           # حالة المصادقة
+│       │   ├── userSlice.js           # حالة المستخدم
+│       │   └── notificationSlice.js   # حالة الإشعارات
+│       │
+│       ├── pages/                     # الصفحات الرئيسية
+│       │   ├── Auth/
+│       │   │   ├── Login.jsx          # تسجيل الدخول
+│       │   │   └── Register.jsx       # التسجيل
+│       │   ├── Home.jsx               # الصفحة الرئيسية
+│       │   ├── Feed.jsx               # التغذية
+│       │   ├── Profile.jsx            # الملف الشخصي
+│       │   ├── Friends.jsx            # الأصدقاء
+│       │   ├── Messages.jsx           # الرسائل
+│       │   ├── Rooms.jsx              # الغرف
+│       │   ├── Games/
+│       │   │   ├── TicTacToe.jsx      # XO
+│       │   │   └── Pong.jsx           # بونج
+│       │   └── Admin/
+│       │       ├── Dashboard.jsx      # لوحة التحكم
+│       │       ├── Users.jsx          # إدارة المستخدمين
+│       │       └── Moderation.jsx     # المراقبة
+│       │
+│       ├── components/                # المكونات
+│       │   ├── common/
+│       │   │   ├── Header.jsx         # الرأس
+│       │   │   ├── Sidebar.jsx        # الشريط الجانبي
+│       │   │   ├── PostCard.jsx       # بطاقة منشور
+│       │   │   ├── Comment.jsx        # تعليق
+│       │   │   └── FriendRequest.jsx  # طلب صداقة
+│       │   ├── feed/
+│       │   │   ├── CreatePost.jsx     # إنشاء منشور
+│       │   │   └── PostList.jsx       # قائمة المنشورات
+│       │   ├── chat/
+│       │   │   ├── MessageList.jsx    # قائمة الرسائل
+│       │   │   └── MessageInput.jsx   # إدخال الرسائل
+│       │   └── games/
+│       │       ├── GameLobby.jsx      # صالة الألعاب
+│       │       └── GameBoard.jsx      # لوحة اللعبة
+│       │
+│       ├── hooks/                     # Custom Hooks
+│       │   ├── useAuth.js             # hook المصادقة
+│       │   ├── useWebSocket.js        # hook WebSocket
+│       │   └── useNotifications.js    # hook الإشعارات
+│       │
+│       └── styles/                    # الأنماط
+│           ├── globals.css
+│           └── components.css
+│
+├── infra/                             # البنية التحتية
+│   ├── nginx/
+│   │   ├── nginx.conf                 # تكوين Nginx
+│   │   └── ssl/                       # شهادات SSL
+│   ├── prometheus/
+│   │   └── prometheus.yml             # مراقبة
+│   ├── grafana/
+│   │   └── dashboards/                # لوحات المراقبة
+│   └── backup/
+│       └── backup_script.sh           # سكريبت النسخ الاحتياطي
+│
+├── tests/                             # الاختبارات
+│   ├── unit/                          # اختبارات الوحدات
+│   │   ├── test_models.py
+│   │   ├── test_services.py
+│   │   └── test_api.py
+│   ├── integration/                   # اختبارات التكامل
+│   │   ├── test_auth.py
+│   │   ├── test_friends.py
+│   │   └── test_messages.py
+│   └── e2e/                           # اختبارات نهاية إلى نهاية
+│       └── test_user_flow.py
+│
+├── docs/                              # الوثائق
+│   ├── API.md                         # وثائق API كاملة
+│   ├── ARCHITECTURE.md                # هندسة النظام
+│   ├── DEPLOYMENT.md                  # دليل النشر
+│   ├── SECURITY.md                    # إجراءات الأمان
+│   ├── DATABASE.md                    # مخطط قاعدة البيانات
+│   └── E2EE_GUIDE.md                  # دليل التشفير
+│
+└── scripts/                           # السكريبتات
+    ├── seed_db.py                     # بيانات تجريبية
+    ├── generate_keys.py               # توليد المفاتيح
+    ├── backup_database.sh             # نسخ قاعدة البيانات
+    └── deploy_production.sh           # نشر للإنتاج

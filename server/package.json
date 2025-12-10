@@ -1,12 +1,18 @@
 {
   "name": "bondos-ultra-social-server",
+<<<<<<< HEAD
   "version": "2.0.0",
   "description": "Realtime social platform with games, rooms, chat",
+=======
+  "version": "1.0.0",
+  "description": "Backend for Bondos Ultra Social - A modern social media platform",
+>>>>>>> 53a9161 (🚀 Initial project setup: Full-stack app with React, Node.js, Express, MongoDB, JWT Auth, Docker)
   "main": "src/index.js",
   "type": "module",
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
+<<<<<<< HEAD
     "seed": "node scripts/seeder.js",
     "test": "jest --coverage --detectOpenHandles",
     "test:watch": "jest --watch"
@@ -17,6 +23,21 @@
   "dependencies": {
     "express": "^4.18.2",
     "socket.io": "^4.7.2",
+=======
+    "test": "jest --coverage"
+  },
+  "keywords": [
+    "social-media",
+    "nodejs",
+    "express",
+    "mongodb",
+    "jwt"
+  ],
+  "author": "Bondos Ultra Social",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+>>>>>>> 53a9161 (🚀 Initial project setup: Full-stack app with React, Node.js, Express, MongoDB, JWT Auth, Docker)
     "mongoose": "^8.0.0",
     "dotenv": "^16.3.1",
     "jsonwebtoken": "^9.1.0",
@@ -25,8 +46,12 @@
     "multer": "^1.4.5-lts.1",
     "helmet": "^7.1.0",
     "express-validator": "^7.0.0",
+<<<<<<< HEAD
     "axios": "^1.6.0",
     "redis": "^4.6.12"
+=======
+    "axios": "^1.6.0"
+>>>>>>> 53a9161 (🚀 Initial project setup: Full-stack app with React, Node.js, Express, MongoDB, JWT Auth, Docker)
   },
   "devDependencies": {
     "nodemon": "^3.0.1",
