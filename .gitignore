@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ### AL ###
 #Template for AL projects for Dynamics 365 Business Central
 #launch.json folder
@@ -20,3 +21,14 @@ rad.json
 *.flf
 #Test results file
 TestResults.xml
+=======
+node_modules/
+dist/
+*.env
+.DS_Store
+uploads/
+*.log
+.vite/
+.env.local
+.env.production
+>>>>>>> 370488d (feat: add frontend pages, Docker setup, and documentation)
