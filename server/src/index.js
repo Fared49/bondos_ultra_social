@@ -23,6 +23,10 @@ import authRoutes from './routes/authRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import postRoutes from './routes/postRoutes.js';
 import themeRoutes from './routes/themeRoutes.js';
+import roomRoutes from './routes/roomRoutes.js';
+import communityRoutes from './routes/communityRoutes.js';
+import gameRoutes from './routes/gameRoutes.js';
+import adminRoutes from './routes/adminRoutes.js';
 
 import { errorHandler } from './middleware/errorHandler.js';
 import { requestLogger } from './middleware/requestLogger.js';
@@ -172,6 +176,10 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/themes', themeRoutes);
+app.use('/api/rooms', roomRoutes);
+app.use('/api/communities', communityRoutes);
+app.use('/api/games', gameRoutes);
+app.use('/api/admin', adminRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {

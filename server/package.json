@@ -37,7 +37,11 @@
   "license": "MIT",
   "dependencies": {
     "express": "^4.18.2",
+<<<<<<< HEAD
 >>>>>>> 53a9161 (🚀 Initial project setup: Full-stack app with React, Node.js, Express, MongoDB, JWT Auth, Docker)
+=======
+    "socket.io": "^4.5.4",
+>>>>>>> 9854696 (feat: Transform into comprehensive entertainment + social platform)
     "mongoose": "^8.0.0",
     "dotenv": "^16.3.1",
     "jsonwebtoken": "^9.1.0",

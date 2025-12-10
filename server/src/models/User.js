@@ -89,6 +89,31 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    isBanned: {
+      type: Boolean,
+      default: false,
+    },
+    role: {
+      type: String,
+      enum: ['user', 'moderator', 'admin'],
+      default: 'user',
+    },
+    statistics: {
+      postsCreated: { type: Number, default: 0 },
+      gamesPlayed: { type: Number, default: 0 },
+      roomsJoined: { type: Number, default: 0 },
+      communitiesJoined: { type: Number, default: 0 },
+      totalLikes: { type: Number, default: 0 },
+    },
+    preferences: {
+      theme: {
+        type: String,
+        enum: ['light', 'dark', 'neon', 'cyber'],
+        default: 'light',
+      },
+      notifications: { type: Boolean, default: true },
+      isPrivate: { type: Boolean, default: false },
+    },
     refreshToken: {
       type: String,
       select: false,
