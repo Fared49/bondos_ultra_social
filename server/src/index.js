@@ -11,6 +11,7 @@ import roomRoutes from './routes/roomRoutes.js';
 import postRoutes from './routes/postRoutes.js';
 import { socketAuthMiddleware } from './middleware/auth.js';
 import * as roomService from './services/roomService.js';
+import { TicTacToeGame, SnakesAndLaddersGame, CardGame, GuessingGame } from './games/GameManagers.js';
 
 dotenv.config();
 
@@ -78,23 +79,22 @@ io.on('connection', (socket) => {
     let GameClass;
     switch (gameType) {
       case 'tictactoe':
-        const { TicTacToeGame } = await import('./games/GameManagers.js');
         gameInstances.set(roomId, new TicTacToeGame(roomId, players));
         break;
       case 'snakes':
-        const { SnakesAndLaddersGame } = await import('./games/GameManagers.js');
         gameInstances.set(roomId, new SnakesAndLaddersGame(roomId, players));
         break;
       case 'cards':
-        const { CardGame } = await import('./games/GameManagers.js');
         gameInstances.set(roomId, new CardGame(roomId, players));
         break;
       case 'guessing':
-        const { GuessingGame } = await import('./games/GameManagers.js');
         gameInstances.set(roomId, new GuessingGame(roomId, players));
         break;
     }
-    io.to(roomId).emit('game:started', gameInstances.get(roomId).getState());
+    const gameState = gameInstances.get(roomId);
+    if (gameState) {
+      io.to(roomId).emit('game:started', gameState.getState());
+    }
   });
 
   socket.on('game:move', (roomId, move) => {
