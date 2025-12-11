@@ -1,6 +1,22 @@
-<<<<<<< HEAD
-<!-- # bondos_ultra_social -->
-=======
+# 🎮 Bondos Ultra Social v2
+# 🎮 Bondos Ultra Social v2
+
+A realtime social media platform with integrated multiplayer games, virtual rooms, and live chat.
+
+## ✨ Features
+
+- **Realtime Chat**: Socket.io powered instant messaging
+- **Multiplayer Games**: TicTacToe, Snakes & Ladders, Card Game, Guessing Game
+- **Virtual Rooms**: Create and manage public/private rooms
+- **Social Posts**: Share and discover content
+- **Live Presence**: See who's online in real-time
+- **User Profiles**: Follow, unfollow, and explore users
+- **Responsive UI**: Built with React and TailwindCSS
+
+## 🛠️ Tech Stack
+
+### Backend
+- Node.js 18+ with Express.js
 # 🎮 Bondos Ultra Social v2
 
 A realtime social media platform with integrated multiplayer games, virtual rooms, and live chat.
@@ -97,4 +113,3 @@ Contributions welcome! Follow the development setup above.
 ## 📝 License
 
 MIT License
->>>>>>> 370488d (feat: add frontend pages, Docker setup, and documentation)

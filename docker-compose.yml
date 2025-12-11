@@ -2,56 +2,7 @@ version: '3.8'
 
 services:
   mongodb:
-<<<<<<< HEAD
-    image: mongo:7.0
-    container_name: bondos_mongo
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: password
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongodb_data:/data/db
-
-  redis:
-    image: redis:7-alpine
-    container_name: bondos_redis
-    ports:
-      - "6379:6379"
-
-  server:
-    build:
-      context: ./server
-      dockerfile: ../docker/Dockerfile.server
-    container_name: bondos_server
-    environment:
-      NODE_ENV: production
-      MONGODB_URI: mongodb://admin:password@mongodb:27017/bondos?authSource=admin
-      REDIS_URL: redis://redis:6379
-      JWT_SECRET: your_jwt_secret_here
-      REFRESH_TOKEN_SECRET: your_refresh_secret_here
-      CLIENT_URL: http://localhost
-      PORT: 5000
-    ports:
-      - "5000:5000"
-    depends_on:
-      - mongodb
-      - redis
-
-  client:
-    build:
-      context: ./client
-      dockerfile: ../docker/Dockerfile.client
-    container_name: bondos_client
-    ports:
-      - "80:80"
-    depends_on:
-      - server
-
-volumes:
-  mongodb_data:
-=======
-    image: mongo:7.0-alpine
+    image: mongo:latest
     container_name: bondos_mongodb
     ports:
       - "27017:27017"
@@ -63,7 +14,7 @@ volumes:
     networks:
       - bondos_network
     healthcheck:
-      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      test: ["CMD", "mongosh", "localhost:27017/test", "--quiet"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -76,12 +27,13 @@ volumes:
     ports:
       - "5000:5000"
     environment:
-      NODE_ENV: production
+      NODE_ENV: development
       BACKEND_PORT: 5000
-      MONGODB_URI: mongodb://${MONGODB_USER}:${MONGODB_PASSWORD}@mongodb:27017/bondos_ultra_social
+      MONGODB_URI: mongodb://admin:${MONGODB_PASSWORD}@mongodb:27017/?authSource=admin
       JWT_ACCESS_SECRET: ${JWT_ACCESS_SECRET}
       JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET}
-      CORS_ORIGIN: http://localhost:3000
+      CORS_ORIGIN: http://localhost:80
+      CLIENT_URL: http://localhost:80
     depends_on:
       mongodb:
         condition: service_healthy
@@ -112,4 +64,3 @@ volumes:
 networks:
   bondos_network:
     driver: bridge
->>>>>>> 53a9161 (🚀 Initial project setup: Full-stack app with React, Node.js, Express, MongoDB, JWT Auth, Docker)

@@ -1,8 +1,5 @@
 import mongoose from 'mongoose';
-<<<<<<< HEAD
-=======
 import bcrypt from 'bcryptjs';
->>>>>>> 53a9161 (🚀 Initial project setup: Full-stack app with React, Node.js, Express, MongoDB, JWT Auth, Docker)
 
 const userSchema = new mongoose.Schema(
   {
@@ -19,23 +16,6 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
       lowercase: true,
-<<<<<<< HEAD
-    },
-    password: { type: String, required: true, select: false },
-    firstName: String,
-    lastName: String,
-    avatar: String,
-    bio: { type: String, maxlength: 500 },
-    followers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-    following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-    blockedUsers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-    theme: { mode: { type: String, default: 'light' }, primaryColor: String },
-    isOnline: { type: Boolean, default: false },
-    lastSeenAt: Date,
-    refreshToken: { type: String, select: false },
-    createdAt: { type: Date, default: Date.now },
-    updatedAt: { type: Date, default: Date.now },
-=======
       match: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
     },
     password: {
@@ -118,15 +98,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       select: false,
     },
->>>>>>> 53a9161 (🚀 Initial project setup: Full-stack app with React, Node.js, Express, MongoDB, JWT Auth, Docker)
   },
   { timestamps: true }
 );
 
-<<<<<<< HEAD
-userSchema.methods.toJSON = function() {
-  const { password, refreshToken, ...user } = this.toObject();
-=======
 // Hash password before saving
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
@@ -150,7 +125,6 @@ userSchema.methods.toJSON = function () {
   const user = this.toObject();
   delete user.password;
   delete user.refreshToken;
->>>>>>> 53a9161 (🚀 Initial project setup: Full-stack app with React, Node.js, Express, MongoDB, JWT Auth, Docker)
   return user;
 };
 

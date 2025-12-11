@@ -1,53 +1,43 @@
-import React, { createContext, useState, useEffect } from 'react';
-<<<<<<< HEAD
-import { authAPI } from '../services/api.js';
-=======
->>>>>>> 53a9161 (🚀 Initial project setup: Full-stack app with React, Node.js, Express, MongoDB, JWT Auth, Docker)
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
 export const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
-<<<<<<< HEAD
-  const [token, setToken] = useState(localStorage.getItem('token'));
-  const [loading, setLoading] = useState(false);
+  const [token, setToken] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Initialize auth on mount
-  const initializeAuth = async () => {
-    const storedToken = localStorage.getItem('token');
-    if (storedToken) {
-      setToken(storedToken);
-      try {
-        const res = await authAPI.getProfile();
-        setUser(res.data);
-      } catch (err) {
-        console.error('Failed to load profile:', err);
-        localStorage.removeItem('token');
-        setToken(null);
-      }
-    }
-  };
-
+  // Initialize auth from localStorage
   useEffect(() => {
-    if (token && !user) {
-      initializeAuth();
+    const savedToken = localStorage.getItem('token');
+    const savedUser = localStorage.getItem('user');
+    if (savedToken && savedUser) {
+      setToken(savedToken);
+      setUser(JSON.parse(savedUser));
     }
-  }, [token, user]);
+    setLoading(false);
+  }, []);
 
   const login = async (email, password) => {
     setLoading(true);
     setError(null);
     try {
-      const res = await authAPI.login({ email, password });
-      setToken(res.data.accessToken);
-      localStorage.setItem('token', res.data.accessToken);
-      localStorage.setItem('refreshToken', res.data.refreshToken);
-      setUser(res.data.user);
-      return res.data;
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || 'Login failed');
+      
+      setToken(data.token);
+      setUser(data.user);
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
+      return data.user;
     } catch (err) {
-      const errorMsg = err.response?.data?.message || 'فشل تسجيل الدخول';
-      setError(errorMsg);
+      setError(err.message);
       throw err;
     } finally {
       setLoading(false);
@@ -58,65 +48,52 @@ export function AuthProvider({ children }) {
     setLoading(true);
     setError(null);
     try {
-      const res = await authAPI.register({ username, email, password });
-      setToken(res.data.accessToken);
-      localStorage.setItem('token', res.data.accessToken);
-      localStorage.setItem('refreshToken', res.data.refreshToken);
-      setUser(res.data.user);
-      return res.data;
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, email, password }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || 'Registration failed');
+      
+      setToken(data.token);
+      setUser(data.user);
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
+      return data.user;
     } catch (err) {
-      const errorMsg = err.response?.data?.message || 'فشل التسجيل';
-      setError(errorMsg);
+      setError(err.message);
       throw err;
     } finally {
       setLoading(false);
     }
-=======
-  const [tokens, setTokens] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  // Load from localStorage on mount
-  useEffect(() => {
-    const savedTokens = localStorage.getItem('tokens');
-    const savedUser = localStorage.getItem('user');
-
-    if (savedTokens && savedUser) {
-      try {
-        setTokens(JSON.parse(savedTokens));
-        setUser(JSON.parse(savedUser));
-      } catch (error) {
-        console.error('Failed to load saved auth data:', error);
-        localStorage.removeItem('tokens');
-        localStorage.removeItem('user');
-      }
-    }
-
-    setLoading(false);
-  }, []);
-
-  const login = (userData, authTokens) => {
-    setUser(userData);
-    setTokens(authTokens);
-    localStorage.setItem('user', JSON.stringify(userData));
-    localStorage.setItem('tokens', JSON.stringify(authTokens));
->>>>>>> 53a9161 (🚀 Initial project setup: Full-stack app with React, Node.js, Express, MongoDB, JWT Auth, Docker)
   };
 
   const logout = () => {
     setUser(null);
-<<<<<<< HEAD
     setToken(null);
     localStorage.removeItem('token');
-    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('user');
   };
 
   const updateProfile = async (data) => {
     try {
-      const res = await authAPI.updateProfile(data);
-      setUser(res.data);
-      return res.data;
+      const response = await fetch('/api/auth/profile', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify(data),
+      });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error || 'Update failed');
+      
+      setUser(result.user);
+      localStorage.setItem('user', JSON.stringify(result.user));
+      return result.user;
     } catch (err) {
-      setError('فشل تحديث الملف الشخصي');
+      setError(err.message);
       throw err;
     }
   };
@@ -132,24 +109,17 @@ export function AuthProvider({ children }) {
         register,
         logout,
         updateProfile,
-        initializeAuth,
       }}
     >
-=======
-    setTokens(null);
-    localStorage.removeItem('tokens');
-    localStorage.removeItem('user');
-  };
-
-  const updateUser = (userData) => {
-    setUser(userData);
-    localStorage.setItem('user', JSON.stringify(userData));
-  };
-
-  return (
-    <AuthContext.Provider value={{ user, tokens, login, logout, updateUser, loading }}>
->>>>>>> 53a9161 (🚀 Initial project setup: Full-stack app with React, Node.js, Express, MongoDB, JWT Auth, Docker)
       {children}
     </AuthContext.Provider>
   );
+}
+
+export function useAuth() {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth must be used within AuthProvider');
+  }
+  return context;
 }

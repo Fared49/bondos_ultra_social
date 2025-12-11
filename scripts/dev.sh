@@ -1,15 +1,5 @@
 #!/bin/bash
 
-<<<<<<< HEAD
-echo "🎮 Starting Bondos Ultra Social in development mode..."
-echo "Frontend: http://localhost:5173"
-echo "Backend: http://localhost:5000"
-echo "Press Ctrl+C to stop"
-
-(cd server && npm run dev) &
-(cd client && npm run dev) &
-
-=======
 # Colors for output
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -48,5 +38,4 @@ echo -e "${YELLOW}Press Ctrl+C to stop servers${NC}"
 trap "kill $BACKEND_PID $FRONTEND_PID" INT
 
 # Wait for processes
->>>>>>> 53a9161 (🚀 Initial project setup: Full-stack app with React, Node.js, Express, MongoDB, JWT Auth, Docker)
 wait

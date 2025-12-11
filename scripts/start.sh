@@ -1,15 +1,5 @@
 #!/bin/bash
 
-<<<<<<< HEAD
-echo "🐳 Starting with Docker Compose..."
-docker-compose up -d
-
-echo "✅ Services started!"
-echo "Frontend: http://localhost"
-echo "Backend API: http://localhost/api"
-echo "MongoDB: localhost:27017"
-echo "Redis: localhost:6379"
-=======
 # Colors for output
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -43,4 +33,3 @@ echo ""
 echo -e "${YELLOW}To stop: kill $BACKEND_PID${NC}"
 
 wait
->>>>>>> 53a9161 (🚀 Initial project setup: Full-stack app with React, Node.js, Express, MongoDB, JWT Auth, Docker)

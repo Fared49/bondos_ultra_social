@@ -1,12 +1,4 @@
 #!/bin/bash
-<<<<<<< HEAD
-set -e
-
-echo "🔨 Building frontend..."
-cd client && npm run build && cd ..
-
-echo "✅ Build complete!"
-=======
 
 # Colors for output
 RED='\033[0;31m'
@@ -44,4 +36,3 @@ echo -e "${GREEN}✓ Build complete!${NC}"
 echo -e "${YELLOW}Build artifacts:${NC}"
 echo -e "  Frontend: ${GREEN}./client/dist${NC}"
 echo -e "  Backend: ${GREEN}ready to run${NC}"
->>>>>>> 53a9161 (🚀 Initial project setup: Full-stack app with React, Node.js, Express, MongoDB, JWT Auth, Docker)

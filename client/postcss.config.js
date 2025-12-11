@@ -1,10 +1,6 @@
-<<<<<<< HEAD
-module.exports = { plugins: { tailwindcss: {}, autoprefixer: {} } };
-=======
-module.exports = {
+export default {
   plugins: {
     tailwindcss: {},
-    autoprefixer: {},
-  },
+    autoprefixer: {}
+  }
 };
->>>>>>> 53a9161 (🚀 Initial project setup: Full-stack app with React, Node.js, Express, MongoDB, JWT Auth, Docker)

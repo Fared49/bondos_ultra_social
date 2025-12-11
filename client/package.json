@@ -1,12 +1,7 @@
 {
   "name": "bondos-ultra-social-client",
-<<<<<<< HEAD
   "version": "2.0.0",
-  "description": "Realtime social platform UI",
-=======
-  "version": "1.0.0",
-  "description": "Frontend for Bondos Ultra Social - A modern social media platform",
->>>>>>> 53a9161 (🚀 Initial project setup: Full-stack app with React, Node.js, Express, MongoDB, JWT Auth, Docker)
+  "description": "Frontend for Bondos Ultra Social - Realtime social platform UI",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -15,31 +10,23 @@
     "lint": "eslint src"
   },
   "dependencies": {
+    "axios": "^1.6.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.17.0",
-    "axios": "^1.6.0",
-<<<<<<< HEAD
-    "socket.io-client": "^4.7.2"
-=======
+    "socket.io-client": "^4.7.2",
     "tailwindcss": "^3.3.6"
->>>>>>> 53a9161 (🚀 Initial project setup: Full-stack app with React, Node.js, Express, MongoDB, JWT Auth, Docker)
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.2.0",
-    "vite": "^5.0.0",
-<<<<<<< HEAD
-    "tailwindcss": "^3.3.6",
     "autoprefixer": "^10.4.16",
-    "postcss": "^8.4.32"
-=======
     "eslint": "^8.53.0",
     "eslint-plugin-react": "^7.33.2",
-    "autoprefixer": "^10.4.16",
-    "postcss": "^8.4.32"
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "postcss": "^8.4.32",
+    "vite": "^5.0.0"
   },
   "engines": {
     "node": ">=18.0.0"
->>>>>>> 53a9161 (🚀 Initial project setup: Full-stack app with React, Node.js, Express, MongoDB, JWT Auth, Docker)
   }
 }

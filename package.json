@@ -4,7 +4,6 @@
   "description": "A modern, production-grade full-stack social media application",
   "private": true,
   "scripts": {
-    "install": "chmod +x scripts/*.sh && bash scripts/install.sh",
     "dev": "bash scripts/dev.sh",
     "build": "bash scripts/build.sh",
     "start": "bash scripts/start.sh",
@@ -21,9 +20,5 @@
     "docker"
   ],
   "author": "Bondos Ultra Social",
-  "license": "MIT",
-  "workspaces": [
-    "server",
-    "client"
-  ]
+  "license": "MIT"
 }
