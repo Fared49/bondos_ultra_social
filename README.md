@@ -1,5 +1,4 @@
 # 🎮 Bondos Ultra Social v2
-# 🎮 Bondos Ultra Social v2
 
 A realtime social media platform with integrated multiplayer games, virtual rooms, and live chat.
 
