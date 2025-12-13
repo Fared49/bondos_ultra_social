@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  server-tests:
+    name: Server: install & test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - name: Install server deps
+        working-directory: server
+        run: npm ci
+      - name: Run server tests
+        working-directory: server
+        run: npm test --silent
+
+  client-tests:
+    name: Client: install, lint & test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - name: Install client deps
+        working-directory: client
+        run: npm ci
+      - name: Lint client
+        working-directory: client
+        run: npm run lint || true
+      - name: Run client tests
+        working-directory: client
+        run: npm test --silent
+
+  root-check:
+    name: Root: build & check
+    runs-on: ubuntu-latest
+    needs: [server-tests, client-tests]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - name: Run check (build + server tests)
+        run: npm run check

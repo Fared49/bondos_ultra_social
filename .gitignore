@@ -7,3 +7,5 @@ uploads/
 .vite/
 .env.local
 .env.production
+server/coverage/
+
