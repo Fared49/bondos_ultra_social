@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../services/api.js';
 
 export default function CommunitiesPage() {
   const [communities, setCommunities] = useState([]);
@@ -12,9 +12,7 @@ export default function CommunitiesPage() {
   useEffect(() => {
     const fetchCommunities = async () => {
       try {
-        const { data } = await axios.get('/api/communities', {
-          params: { search, category },
-        });
+        const { data } = await api.get('/communities', { params: { search, category } });
         setCommunities(data.communities);
       } catch (error) {
         console.error('Failed to fetch communities:', error);
@@ -28,9 +26,7 @@ export default function CommunitiesPage() {
 
   const handleJoinCommunity = async (communityId) => {
     try {
-      await axios.post(`/api/communities/${communityId}/join`, {}, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-      });
+      await api.post(`/communities/${communityId}/join`);
       alert('Joined community successfully!');
     } catch (error) {
       console.error('Failed to join community:', error);

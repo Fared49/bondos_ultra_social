@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useContext } from 'react';
-import { AuthContext } from '../store/AuthContext';
+import api from '../services/api.js';
+import { useAuth } from '../hooks/useAuth.js';
 
 export default function AdminPanel() {
   const [activeTab, setActiveTab] = useState('stats');
@@ -27,9 +26,7 @@ export default function AdminPanel() {
 
   const fetchStats = async () => {
     try {
-      const { data } = await axios.get('/api/admin/stats', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-      });
+      const { data } = await api.get('/admin/stats');
       setStats(data);
     } catch (error) {
       console.error('Failed to fetch stats:', error);
@@ -38,9 +35,7 @@ export default function AdminPanel() {
 
   const fetchUsers = async () => {
     try {
-      const { data } = await axios.get('/api/admin/users', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-      });
+      const { data } = await api.get('/admin/users');
       setUsers(data.users);
     } catch (error) {
       console.error('Failed to fetch users:', error);
@@ -49,9 +44,7 @@ export default function AdminPanel() {
 
   const fetchRooms = async () => {
     try {
-      const { data } = await axios.get('/api/admin/rooms', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-      });
+      const { data } = await api.get('/admin/rooms');
       setRooms(data.rooms);
     } catch (error) {
       console.error('Failed to fetch rooms:', error);
@@ -60,9 +53,7 @@ export default function AdminPanel() {
 
   const fetchCommunities = async () => {
     try {
-      const { data } = await axios.get('/api/admin/communities', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-      });
+      const { data } = await api.get('/admin/communities');
       setCommunities(data.communities);
     } catch (error) {
       console.error('Failed to fetch communities:', error);
@@ -71,9 +62,7 @@ export default function AdminPanel() {
 
   const fetchReports = async () => {
     try {
-      const { data } = await axios.get('/api/admin/reports', {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-      });
+      const { data } = await api.get('/admin/reports');
       setReports(data.reports);
     } catch (error) {
       console.error('Failed to fetch reports:', error);
@@ -82,9 +71,7 @@ export default function AdminPanel() {
 
   const handleBanUser = async (userId) => {
     try {
-      await axios.post(`/api/admin/users/${userId}/ban`, {}, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-      });
+      await api.post(`/admin/users/${userId}/ban`);
       fetchUsers();
     } catch (error) {
       console.error('Failed to ban user:', error);
@@ -94,9 +81,7 @@ export default function AdminPanel() {
   const handleDeleteRoom = async (roomId) => {
     if (window.confirm('Are you sure?')) {
       try {
-        await axios.delete(`/api/admin/rooms/${roomId}`, {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-        });
+        await api.delete(`/admin/rooms/${roomId}`);
         fetchRooms();
       } catch (error) {
         console.error('Failed to delete room:', error);

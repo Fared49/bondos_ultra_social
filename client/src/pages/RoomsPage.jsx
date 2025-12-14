@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../services/api.js';
 import { useNavigate } from 'react-router-dom';
 
 export default function RoomsPage() {
@@ -28,9 +28,7 @@ export default function RoomsPage() {
   const handleCreateRoom = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('/api/rooms', formData, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-      });
+      await api.post('/rooms', formData);
       setShowCreateModal(false);
       setFormData({ name: '', description: '', isPrivate: false });
       fetchRooms();
@@ -41,9 +39,7 @@ export default function RoomsPage() {
 
   const handleJoinRoom = async (roomId) => {
     try {
-      await axios.post(`/api/rooms/${roomId}/join`, {}, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-      });
+      await api.post(`/rooms/${roomId}/join`);
       navigate(`/room/${roomId}`);
     } catch (error) {
       console.error('Failed to join room:', error);

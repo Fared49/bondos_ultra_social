@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useAuth } from '../hooks/useAppContext.js';
+import { useAuth } from '../hooks/useAuth.js';
 import { authAPI } from '../services/api.js';
 
 export default function ProfilePage() {

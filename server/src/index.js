@@ -51,7 +51,7 @@ const activeUsers = new Map(); // userId -> socketId
 const gameInstances = new Map(); // roomId -> game
 
 io.on('connection', (socket) => {
-  console.log(`✓ User ${socket.userId} connected`);
+  import('./utils/logger.js').then(({ log }) => log(`✓ User ${socket.userId} connected`));
   activeUsers.set(socket.userId, socket.id);
   io.emit('users:online', Array.from(activeUsers.keys()));
 
@@ -117,7 +117,7 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     activeUsers.delete(socket.userId);
     io.emit('users:online', Array.from(activeUsers.keys()));
-    console.log(`✗ User ${socket.userId} disconnected`);
+    import('./utils/logger.js').then(({ log }) => log(`✗ User ${socket.userId} disconnected`));
   });
 });
 
@@ -128,11 +128,11 @@ async function start() {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    console.log('✓ MongoDB connected');
+    import('./utils/logger.js').then(({ log }) => log('✓ MongoDB connected'));
 
     const PORT = process.env.PORT || 5000;
     httpServer.listen(PORT, () => {
-      console.log(`✓ Server running on port ${PORT}`);
+      import('./utils/logger.js').then(({ log }) => log(`✓ Server running on port ${PORT}`));
     });
   } catch (err) {
     console.error('✗ Startup failed:', err);

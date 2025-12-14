@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { roomsAPI } from '../services/api.js';
-import { useSocket } from '../hooks/useAppContext.js';
+import useSocket from '../hooks/useSocket.js';
 
 export default function RoomPage() {
   const { roomId } = useParams();

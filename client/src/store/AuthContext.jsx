@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import api from '../services/api.js';
 
 export const AuthContext = createContext();
 
@@ -8,13 +9,18 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Initialize auth from localStorage
+  // Initialize auth from localStorage (support legacy `token` key)
   useEffect(() => {
-    const savedToken = localStorage.getItem('token');
+    const tokensRaw = localStorage.getItem('tokens') || localStorage.getItem('token');
     const savedUser = localStorage.getItem('user');
-    if (savedToken && savedUser) {
-      setToken(savedToken);
-      setUser(JSON.parse(savedUser));
+    if (tokensRaw && savedUser) {
+      try {
+        const tokens = typeof tokensRaw === 'string' && tokensRaw.startsWith('{') ? JSON.parse(tokensRaw) : { accessToken: tokensRaw };
+        setToken(tokens.accessToken || null);
+        setUser(JSON.parse(savedUser));
+      } catch (e) {
+        // ignore
+      }
     }
     setLoading(false);
   }, []);
@@ -23,21 +29,17 @@ export function AuthProvider({ children }) {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.error || 'Login failed');
-      
-      setToken(data.token);
+      const { data } = await api.post('/auth/login', { email, password });
+      if (!data) throw new Error('Login failed');
+
+      const tokens = { accessToken: data.accessToken, refreshToken: data.refreshToken };
+      setToken(tokens.accessToken);
       setUser(data.user);
-      localStorage.setItem('token', data.token);
+      localStorage.setItem('tokens', JSON.stringify(tokens));
       localStorage.setItem('user', JSON.stringify(data.user));
       return data.user;
     } catch (err) {
-      setError(err.message);
+      setError(err.message || err.toString());
       throw err;
     } finally {
       setLoading(false);
@@ -48,21 +50,16 @@ export function AuthProvider({ children }) {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch('/api/auth/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, email, password }),
-      });
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.error || 'Registration failed');
-      
-      setToken(data.token);
+      const { data } = await api.post('/auth/register', { username, email, password });
+      if (!data) throw new Error('Registration failed');
+      const tokens = { accessToken: data.accessToken, refreshToken: data.refreshToken };
+      setToken(tokens.accessToken);
       setUser(data.user);
-      localStorage.setItem('token', data.token);
+      localStorage.setItem('tokens', JSON.stringify(tokens));
       localStorage.setItem('user', JSON.stringify(data.user));
       return data.user;
     } catch (err) {
-      setError(err.message);
+      setError(err.message || err.toString());
       throw err;
     } finally {
       setLoading(false);
@@ -72,7 +69,7 @@ export function AuthProvider({ children }) {
   const logout = () => {
     setUser(null);
     setToken(null);
-    localStorage.removeItem('token');
+    localStorage.removeItem('tokens');
     localStorage.removeItem('user');
   };
 
