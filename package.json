@@ -8,6 +8,7 @@
     "build": "bash scripts/build.sh",
     "start": "bash scripts/start.sh",
     "check": "npm run build && (cd server && npm test --silent)",
+    "format": "prettier --write .",
     "lint": "cd client && npm run lint || true && cd server && npm run lint || true",
     "prepare": "husky install",
     "docker:up": "docker-compose up -d",
@@ -25,6 +26,9 @@
   "author": "Bondos Ultra Social",
   "license": "MIT",
   "devDependencies": {
-    "husky": "^8.0.0"
+    "husky": "^8.0.0",
+    "prettier": "^2.8.8",
+    "@commitlint/cli": "^17.6.0",
+    "@commitlint/config-conventional": "^17.6.0"
   }
 }
