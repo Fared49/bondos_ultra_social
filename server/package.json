@@ -34,13 +34,21 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
-    "test": "jest --coverage --passWithNoTests",
+    "test": "node --experimental-vm-modules node_modules/.bin/jest --coverage --passWithNoTests",
     "lint": "eslint src --ext .js"
   },
   "jest": {
     "testMatch": [
       "**/__tests__/**/*.cjs"
     ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 50,
+        "functions": 50,
+        "lines": 50,
+        "statements": 50
+      }
+    },
     "testEnvironment": "node"
   },
   "engines": {

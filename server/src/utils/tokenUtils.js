@@ -32,6 +32,10 @@ export const verifyToken = (token, type = 'access') => {
   }
 };
 
+export const verifyAccessToken = (token) => verifyToken(token, 'access');
+
+export const verifyRefreshToken = (token) => verifyToken(token, 'refresh');
+
 export const generateInviteCode = () => {
   return Math.random().toString(36).substring(2, 10).toUpperCase();
 };
