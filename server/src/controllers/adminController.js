@@ -41,7 +41,6 @@ export const getAllUsers = async (req, res) => {
 export const banUser = async (req, res) => {
   try {
     const { userId } = req.params;
-    const { reason } = req.body;
 
     const user = await User.findByIdAndUpdate(userId, { isBanned: true }, { new: true });
 

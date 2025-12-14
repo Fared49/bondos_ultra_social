@@ -84,7 +84,6 @@ io.on('connection', (socket) => {
 
   // Game events
   socket.on('game:start', (roomId, gameType, players) => {
-    let GameClass;
     switch (gameType) {
       case 'tictactoe':
         gameInstances.set(roomId, new TicTacToeGame(roomId, players));
@@ -108,7 +107,7 @@ io.on('connection', (socket) => {
   socket.on('game:move', (roomId, move) => {
     const game = gameInstances.get(roomId);
     if (game) {
-      const result = game.makeMove ? game.makeMove(socket.userId, move) : null;
+      if (game.makeMove) game.makeMove(socket.userId, move);
       io.to(roomId).emit('game:state', game.getState());
     }
   });

@@ -8,6 +8,8 @@
     "build": "bash scripts/build.sh",
     "start": "bash scripts/start.sh",
     "check": "npm run build && (cd server && npm test --silent)",
+    "lint": "cd client && npm run lint || true && cd server && npm run lint || true",
+    "prepare": "husky install",
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down",
     "docker:logs": "docker-compose logs -f"
@@ -21,5 +23,8 @@
     "docker"
   ],
   "author": "Bondos Ultra Social",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "husky": "^8.0.0"
+  }
 }

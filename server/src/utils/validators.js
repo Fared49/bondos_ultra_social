@@ -12,6 +12,8 @@ export const validateUsername = (username) => {
 };
 
 export const sanitizeUserData = (user) => {
-  const { password, refreshToken, ...safe } = user._doc || user;
+  const safe = { ...(user._doc || user) };
+  delete safe.password;
+  delete safe.refreshToken;
   return safe;
 };

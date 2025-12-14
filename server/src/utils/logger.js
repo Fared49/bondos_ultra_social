@@ -9,10 +9,8 @@ const backendLog = path.join(logsDir, 'backend.log');
 export function log(...args) {
   const message = `[${new Date().toISOString()}] ${args.join(' ')}\n`;
   // append to file
-  fs.appendFile(backendLog, message, (err) => {
-    if (err) {
-      // do not crash on logging errors
-    }
+  fs.appendFile(backendLog, message, (_err) => {
+    // ignore logging errors
   });
   // only print to stdout in non-production
   if (process.env.NODE_ENV !== 'production') {
@@ -23,7 +21,7 @@ export function log(...args) {
 
 export function error(...args) {
   const message = `[${new Date().toISOString()}] ERROR ${args.join(' ')}\n`;
-  fs.appendFile(backendLog, message, (err) => {});
+  fs.appendFile(backendLog, message, (_err) => {});
   if (process.env.NODE_ENV !== 'production') {
     // eslint-disable-next-line no-console
     console.error(...args);
