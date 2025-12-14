@@ -2,9 +2,8 @@ import User from '../models/User.js';
 import bcrypt from 'bcryptjs';
 
 export async function createUser(data) {
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(data.password, salt);
-  return User.create({ ...data, password: hashedPassword });
+  // Let the `User` model pre-save hook perform hashing to avoid double-hash
+  return User.create(data);
 }
 
 export async function validatePassword(plainPassword, hashedPassword) {
